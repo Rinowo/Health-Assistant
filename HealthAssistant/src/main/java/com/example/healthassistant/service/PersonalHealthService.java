@@ -15,4 +15,6 @@ public interface PersonalHealthService {
     Optional<PersonalHealthVitals> findPersonalHealthByID(long id);
 
     PersonalHealthVitals getOne(long id);
+
+    Optional<PersonalHealthVitals> findByUserId(Long id);
 }

@@ -21,15 +21,9 @@ public class Controller {
         return "assistant";
     }
 
-    @GetMapping(path = "/personal")
+    @GetMapping(path = "/personal/")
     public String personal(Model model) {
         return "personal";
-    }
-
-    @GetMapping(path = "/edit")
-    public String edit(Model model) {
-
-        return "health-edit";
     }
 
     @GetMapping(path = "/register")

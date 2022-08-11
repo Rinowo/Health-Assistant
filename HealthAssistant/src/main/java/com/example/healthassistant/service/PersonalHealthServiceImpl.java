@@ -38,4 +38,9 @@ public class PersonalHealthServiceImpl implements PersonalHealthService{
     public PersonalHealthVitals getOne(long id) {
         return personalHealthRepository.findById(id).get();
     }
+
+    @Override
+    public Optional<PersonalHealthVitals> findByUserId(Long id) {
+        return personalHealthRepository.findByUserId(id);
+    }
 }

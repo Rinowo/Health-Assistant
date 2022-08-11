@@ -15,16 +15,15 @@
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"></h3>
-                        <form>
-<!--                                th:action="@{/add/vehicle}"-->
-<!--                                th:object="${vehicle}"-->
-<!--                                enctype="multipart/form-data"-->
-<!--                                method="POST"-->
+                        <form action="#"
+                              th:action="@{/edit/{id}(id = ${personalHealth.userId})}"
+                              th:object="${personalHealth}"
+                              method="POST">
+                            <input type="hidden" th:field="*{id}" />
                             <div class="row">
                                 <div class="col-md-6 mb-4">
-
                                     <div class="form-outline">
-                                        <input placeholder="Weight" type="text" id="weight" class="form-control form-control-lg" />
+                                        <input placeholder="Weight" th:field="*{weight}" type="text" id="weight" class="form-control form-control-lg" />
                                         <label class="form-label" for="weight"></label>
                                     </div>
 
@@ -32,7 +31,7 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input placeholder="Height" type="text" id="height" class="form-control form-control-lg" />
+                                        <input placeholder="Height" th:field="*{height}" type="text" id="height" class="form-control form-control-lg" />
                                         <label class="form-label" for="height"></label>
                                     </div>
 
@@ -43,7 +42,7 @@
                                 <div class="col-md-6 mb-4 pb-2">
 
                                     <div class="form-outline">
-                                        <input placeholder="Blood Pressure" type="email" id="pressure" class="form-control form-control-lg" />
+                                        <input placeholder="Blood Pressure" th:field="*{bloodPressure}" type="text" id="pressure" class="form-control form-control-lg" />
                                         <label class="form-label" for="pressure"></label>
                                     </div>
 
@@ -51,7 +50,7 @@
                                 <div class="col-md-6 mb-4 pb-2">
 
                                     <div class="form-outline">
-                                        <input placeholder="Blood Glucose" type="tel" id="glucose" class="form-control form-control-lg" />
+                                        <input placeholder="Blood Glucose" th:field="*{bloodGlucose}" type="text" id="glucose" class="form-control form-control-lg" />
                                         <label class="form-label" for="glucose"></label>
                                     </div>
 
@@ -62,7 +61,7 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input placeholder="Blood Oxygen" type="text" id="oxygen" class="form-control form-control-lg" />
+                                        <input placeholder="Blood Oxygen" th:field="*{bloodOxygen}" type="text" id="oxygen" class="form-control form-control-lg" />
                                         <label class="form-label" for="oxygen"></label>
                                     </div>
 
@@ -70,8 +69,8 @@
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input placeholder="Body Temparature" type="text" id="temparature" class="form-control form-control-lg" />
-                                        <label class="form-label" for="temparature"></label>
+                                        <input placeholder="Body Temperature" th:field="*{bodyTemperature}" type="text" id="temperature" class="form-control form-control-lg" />
+                                        <label class="form-label" for="temperature"></label>
                                     </div>
 
                                 </div>
