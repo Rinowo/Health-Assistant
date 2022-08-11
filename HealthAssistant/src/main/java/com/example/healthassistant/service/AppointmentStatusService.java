@@ -1,5 +1,7 @@
 package com.example.healthassistant.service;
 
+import com.example.healthassistant.model.AppointmentStatus;
+
 import java.util.List;
 import java.util.Optional;
 

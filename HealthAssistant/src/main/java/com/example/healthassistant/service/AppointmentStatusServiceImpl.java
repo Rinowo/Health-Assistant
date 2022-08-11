@@ -1,5 +1,6 @@
 package com.example.healthassistant.service;
 
+import com.example.healthassistant.model.AppointmentStatus;
 import com.example.healthassistant.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
