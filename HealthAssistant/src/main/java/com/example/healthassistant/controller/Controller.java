@@ -16,7 +16,7 @@ public class Controller {
         return "index-user";
     }
 
-    @GetMapping(path = "/assistant")
+    @GetMapping(path = "/health-assistant")
     public String assistant(Model model) {
         return "assistant";
     }
