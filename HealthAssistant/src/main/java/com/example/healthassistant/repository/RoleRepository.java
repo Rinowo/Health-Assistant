@@ -1,13 +1,13 @@
 package com.example.healthassistant.repository;
 
-import com.example.healthassistant.model.Users;
+import com.example.healthassistant.model.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Long>{
-    Users findByUsername(String name);
-    Boolean existsByUsername(String username);
+public interface RoleRepository extends JpaRepository<Roles,Long> {
+    Optional<Roles> findByRoleName(String name);
+
 }

@@ -1,4 +1,4 @@
-package com.example.healthassistant.controller;
+package com.example.healthassistant.controller.users;
 
 import com.example.healthassistant.model.MedicineDosages;
 import com.example.healthassistant.service.MedicineDosagesService;

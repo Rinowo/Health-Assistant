@@ -1,4 +1,4 @@
-package com.example.healthassistant.controller;
+package com.example.healthassistant.controller.users;
 
 import com.example.healthassistant.model.PersonalHealthVitals;
 import com.example.healthassistant.model.Users;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,17 +32,17 @@ public class PersonalHealthController {
         if (personalHealth.isPresent()) {
             model.addAttribute("users", users.get());
             model.addAttribute("personHealth", personalHealth.get());
-            return "personal";
+            return "/web/user/personal";
         } else {
             return "not-found";
         }
     }
 
-    @GetMapping("/showNewPersonalHealthForm")
+    @GetMapping("/health-personal")
     public String showNewPersonalHealthForm(Model model){
         PersonalHealthVitals personalHealth = new PersonalHealthVitals();
         model.addAttribute("personalHealth", personalHealth);
-        return "health-create";
+        return "/web/user/health-create";
     }
 
     @PostMapping("/savePersonalHealth")
@@ -57,7 +56,7 @@ public class PersonalHealthController {
                                      Model model) {
         Optional<PersonalHealthVitals> personalHealth = personalHealthService.findByUserId(id);
         model.addAttribute("personalHealth", personalHealth.get());
-        return "health-edit";
+        return "/web/user/health-edit";
     }
 
     @PostMapping(value = "/edit/{id}")
@@ -73,5 +72,27 @@ public class PersonalHealthController {
     public String deletePersonalHealth(@PathVariable (value = "id") long id) {
         this.personalHealthService.deletePersonalHealth(id);
         return "redirect:/personal-health";
+    }
+
+    @GetMapping(path = {"/index", "/", "/home"})
+    public String index(Model model) {
+        return "/web/user/index";
+    }
+
+    @GetMapping(path = {"/user"})
+    public String showUserIndex(Model model) {
+//        Optional<Users> users = usersService.findById(id);
+//        if (users.isPresent()) {
+//            model.addAttribute("users", users.get());
+//            return "/web/user/index-user";
+//        }  else {
+//            return "not-found";
+//        }
+        return "/web/user/index-user";
+    }
+
+    @GetMapping(path = "/health-assistant")
+    public String assistant(Model model) {
+        return "/web/user/assistant";
     }
 }

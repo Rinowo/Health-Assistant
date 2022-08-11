@@ -3,7 +3,7 @@ package com.example.healthassistant.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "UserRole")
 public class UserRole {
     private long id;
     private Long userId;

@@ -130,4 +130,17 @@ public class Users {
         return Objects.hash(id, email, password, name, number, gender, birthday, avatar, username);
     }
 
+    private Set<Roles> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "UserRole",
+            joinColumns = @JoinColumn(name ="User_id"),
+            inverseJoinColumns = @JoinColumn(name = "Role_id"))
+    public Set<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
+    }
 }
