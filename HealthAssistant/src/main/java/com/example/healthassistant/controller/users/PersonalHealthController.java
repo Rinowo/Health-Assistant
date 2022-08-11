@@ -5,6 +5,8 @@ import com.example.healthassistant.model.Users;
 import com.example.healthassistant.service.PersonalHealthServiceImpl;
 import com.example.healthassistant.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,20 @@ public class PersonalHealthController {
     UsersServiceImpl usersService;
     @Autowired
     PersonalHealthServiceImpl personalHealthService;
+
+//    @GetMapping("/personal-health/{name}")
+//    public String showPersonalHealth(@PathVariable String name,
+//                                     Model model){
+//        Optional<Users> users = usersService.findById(id);
+//        Optional<PersonalHealthVitals> personalHealth = personalHealthService.findByUserId(id);
+//        if (personalHealth.isPresent()) {
+//            model.addAttribute("users", users.get());
+//            model.addAttribute("personHealth", personalHealth.get());
+//            return "/web/user/personal";
+//        } else {
+//            return "not-found";
+//        }
+//    }
 
     @GetMapping("/personal-health/{id}")
     public String showPersonalHealth(@PathVariable Long id,
@@ -81,13 +97,12 @@ public class PersonalHealthController {
 
     @GetMapping(path = {"/user"})
     public String showUserIndex(Model model) {
-//        Optional<Users> users = usersService.findById(id);
-//        if (users.isPresent()) {
-//            model.addAttribute("users", users.get());
-//            return "/web/user/index-user";
-//        }  else {
-//            return "not-found";
-//        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Users u = usersService.findByUsername(username);
+        model.addAttribute("user", u);
+        //Object o = authentication.getPrincipal();
         return "/web/user/index-user";
     }
 

@@ -14,6 +14,13 @@ public class PersonalHealthVitals {
     private String bloodOxygen;
     private String bodyTemperature;
 
+    public PersonalHealthVitals() {
+    }
+
+    public PersonalHealthVitals(Long userId) {
+        this.userId = userId;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
