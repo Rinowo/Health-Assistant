@@ -17,4 +17,6 @@ public interface PersonalHealthService {
     PersonalHealthVitals getOne(long id);
 
     Optional<PersonalHealthVitals> findByUserId(Long id);
+
+    PersonalHealthVitals deleteByUserId(Long id);
 }

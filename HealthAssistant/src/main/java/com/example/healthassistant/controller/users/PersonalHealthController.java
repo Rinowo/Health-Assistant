@@ -1,5 +1,6 @@
 package com.example.healthassistant.controller.users;
 
+import com.example.healthassistant.dto.UserDto;
 import com.example.healthassistant.model.PersonalHealthVitals;
 import com.example.healthassistant.model.Users;
 import com.example.healthassistant.service.PersonalHealthServiceImpl;
@@ -26,29 +27,16 @@ public class PersonalHealthController {
     @Autowired
     PersonalHealthServiceImpl personalHealthService;
 
-//    @GetMapping("/personal-health/{name}")
-//    public String showPersonalHealth(@PathVariable String name,
-//                                     Model model){
-//        Optional<Users> users = usersService.findById(id);
-//        Optional<PersonalHealthVitals> personalHealth = personalHealthService.findByUserId(id);
-//        if (personalHealth.isPresent()) {
-//            model.addAttribute("users", users.get());
-//            model.addAttribute("personHealth", personalHealth.get());
-//            return "/web/user/personal";
-//        } else {
-//            return "not-found";
-//        }
-//    }
-
     @GetMapping("/personal-health/{id}")
     public String showPersonalHealth(@PathVariable Long id,
                                      Model model){
+
         Optional<Users> users = usersService.findById(id);
         Optional<PersonalHealthVitals> personalHealth = personalHealthService.findByUserId(id);
         if (personalHealth.isPresent()) {
-            model.addAttribute("users", users.get());
+            model.addAttribute("user", users.get());
             model.addAttribute("personHealth", personalHealth.get());
-            return "/web/user/personal";
+            return "web/user/personal";
         } else {
             return "not-found";
         }
@@ -62,7 +50,8 @@ public class PersonalHealthController {
     }
 
     @PostMapping("/savePersonalHealth")
-    public String savePersonalHealth(@ModelAttribute("personalHealth") PersonalHealthVitals personalHealth) {
+    public String savePersonalHealth(@ModelAttribute("personalHealth")
+                                         PersonalHealthVitals personalHealth) {
         personalHealthService.savePersonalHealth(personalHealth);
         return "redirect:/personal";
     }
@@ -84,10 +73,28 @@ public class PersonalHealthController {
         return "redirect:/personal-health/" + id;
     }
 
-    @GetMapping("/deletePersonalHealth/{id}")
-    public String deletePersonalHealth(@PathVariable (value = "id") long id) {
-        this.personalHealthService.deletePersonalHealth(id);
-        return "redirect:/personal-health";
+    @PostMapping ("/delete-account/{id}")
+    public String deletePersonalHealth(@PathVariable ("id") long id,
+                                       @ModelAttribute UserDto userDto,
+                                       @Valid Users user,
+                                       BindingResult result) {
+        Optional<PersonalHealthVitals> healthVitals = personalHealthService.findByUserId(id);
+        this.personalHealthService.deleteByUserId(id);
+
+        Optional<Users> users = usersService.findById(id);
+        user.setId(id);
+        user.setEmail(userDto.getEmail());
+        user.setName(userDto.getName());
+        user.setNumber(userDto.getNumber());
+        user.setGender(userDto.getGender());
+        user.setBirthday(userDto.getBirthday());
+        user.setAvatar(userDto.getAvatar());
+        user.setUsername(userDto.getUsername());
+
+        usersService.saveUsers(user);
+
+
+        return "redirect:/home";
     }
 
     @GetMapping(path = {"/index", "/", "/home"})
@@ -107,7 +114,13 @@ public class PersonalHealthController {
     }
 
     @GetMapping(path = "/health-assistant")
-    public String assistant(Model model) {
+    public String assistantUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Users u = usersService.findByUsername(username);
+        model.addAttribute("user", u);
         return "/web/user/assistant";
     }
+
 }

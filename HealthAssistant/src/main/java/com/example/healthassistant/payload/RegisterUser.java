@@ -9,7 +9,15 @@ public class RegisterUser {
 
     private String avatar = "/img/default-avatar.jpg";
 
+    private int status = 1;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getAvatar() {
         return avatar;

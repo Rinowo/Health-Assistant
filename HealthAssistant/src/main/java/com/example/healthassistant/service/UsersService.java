@@ -18,9 +18,9 @@ public interface UsersService {
     Users findUserById(Long id);
 
     //delete
-    void deleteUser(Long id);
+    void deleteByUser(Long id);
 
-    Users findByUsername(String name);
+     Users findByUsername(String name);
 
     Boolean existsByUsername(String username);
 }

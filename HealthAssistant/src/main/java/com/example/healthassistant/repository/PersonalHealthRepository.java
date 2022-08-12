@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface PersonalHealthRepository extends JpaRepository<PersonalHealthVitals, Long> {
 
     Optional<PersonalHealthVitals> findByUserId(Long id);
+
+    PersonalHealthVitals deleteByUserId(Long id);
 }

@@ -41,6 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/admin/user/**",
                         "/register",
                         "/",
+                        "/health-assistant/*",
+                        "/personal/**",
+                        "/personal/submitForm",
                         "/registersubmit",
                         "/admin/subscribers/save",
                         "/admin/subscribers",
@@ -60,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/admin/login?success=fail")
                 .usernameParameter("name")
                 .passwordParameter("password")
-                .permitAll();
+                .permitAll().and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
 }

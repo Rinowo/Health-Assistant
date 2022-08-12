@@ -25,6 +25,7 @@ public class UsersServiceImpl implements UsersService {
         usersRepository.save(user);
     }
 
+
     @Override
     public List<Users> listsUsers() {
         return usersRepository.findAll();
@@ -36,7 +37,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteByUser(Long id) {
         usersRepository.deleteById(id);
     }
 
