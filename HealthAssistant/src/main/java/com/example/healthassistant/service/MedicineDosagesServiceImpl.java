@@ -38,4 +38,9 @@ public class MedicineDosagesServiceImpl implements MedicineDosagesService{
     public MedicineDosages getOne(long dosagesId) {
         return medicineDosagesRepository.findById(dosagesId).get();
     }
+
+    @Override
+    public Optional<MedicineDosages> findByUserId(Long id) {
+        return medicineDosagesRepository.findByUserId(id);
+    }
 }

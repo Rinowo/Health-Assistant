@@ -38,4 +38,9 @@ public class AppointmentStatusServiceImpl implements AppointmentStatusService{
     public AppointmentStatus getOne(long notificationId) {
         return appointmentRepository.findById(notificationId).get();
     }
+
+    @Override
+    public Optional<AppointmentStatus> findByUserId(Long id) {
+        return appointmentRepository.findByUserId(id);
+    }
 }

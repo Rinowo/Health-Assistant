@@ -99,18 +99,12 @@ public class PersonalHealthController {
 
     @GetMapping(path = {"/index", "/", "/home"})
     public String index(Model model) {
-        return "/web/user/index";
-    }
-
-    @GetMapping(path = {"/user"})
-    public String showUserIndex(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         Users u = usersService.findByUsername(username);
         model.addAttribute("user", u);
-        //Object o = authentication.getPrincipal();
-        return "/web/user/index-user";
+        return "/web/user/index";
     }
 
     @GetMapping(path = "/health-assistant")

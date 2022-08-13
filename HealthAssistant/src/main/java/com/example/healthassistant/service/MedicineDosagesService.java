@@ -15,4 +15,6 @@ public interface MedicineDosagesService {
     Optional<MedicineDosages> findMedicineByID(long dosagesId);
 
     MedicineDosages getOne(long dosagesId);
+
+    Optional<MedicineDosages> findByUserId(Long id);
 }

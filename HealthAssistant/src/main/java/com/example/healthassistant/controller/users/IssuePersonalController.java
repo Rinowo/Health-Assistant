@@ -39,35 +39,14 @@ public class IssuePersonalController {
         model.addAttribute("lists", lists);
         model.addAttribute("keyword", keyword);
         model.addAttribute("listsPersonals", listsPersonals);
-        return "web/personal/result";
-    }
-
-    @RequestMapping(value = "/submitFormUser",method = RequestMethod.POST)
-    public String postSearchUser(Model model,
-                             @RequestParam("keyword") String keyword){
-        List<IssuePersonal> lists = issuePersonalService.searchByName(keyword);
-        List<IssuePersonal> listsPersonals = issuePersonalService.findAll();
-        model.addAttribute("lists", lists);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("listsPersonals", listsPersonals);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         Users u = usersService.findByUsername(username);
         model.addAttribute("user", u);
-        return "web/personal/result-user";
+        return "web/personal/result";
     }
 
-//    @RequestMapping(value = "/category/{id}",method = RequestMethod.POST)
-//    public String category(Model model,
-//                           @PathVariable("id") Long id){
-//        List<IssuePersonal> lists = issuePersonalService.findAllByCategoryId(id);
-//        List<IssuePersonal> listsPersonals = issuePersonalService.findAll();
-//        model.addAttribute("lists", lists);
-//        model.addAttribute("keyword", id);
-//        model.addAttribute("listsPersonals", listsPersonals);
-//        return "web/user/assistant";
-//    }
 
     @RequestMapping(value = "/category/{id}",method = RequestMethod.POST)
     public String categoryUser(Model model,
