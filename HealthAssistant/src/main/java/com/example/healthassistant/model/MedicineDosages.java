@@ -7,7 +7,7 @@ import java.util.Objects;
 public class MedicineDosages {
     private Long userId;
     private long dosagesId;
-    private Long medicineId;
+    private String medicinename;
     private String timesInADay;
     private String timesPerWeek;
     private String dosageQuantity;
@@ -33,15 +33,24 @@ public class MedicineDosages {
         this.dosagesId = dosagesId;
     }
 
-    @Basic
-    @Column(name = "MedicineId")
-    public Long getMedicineId() {
-        return medicineId;
+    @Column(name = "Medicine")
+    public String getMedicinename() {
+        return medicinename;
     }
 
-    public void setMedicineId(Long medicineId) {
-        this.medicineId = medicineId;
+    public void setMedicinename(String medicinename) {
+        this.medicinename = medicinename;
     }
+
+    //    @Basic
+//    @Column(name = "Medicine")
+//    public String getMedicine() {
+//        return medicine;
+//    }
+//
+//    public void setMedicine(String medicine) {
+//        this.medicine = this.medicine;
+//    }
 
     @Basic
     @Column(name = "TimesInADay")
@@ -78,11 +87,16 @@ public class MedicineDosages {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedicineDosages that = (MedicineDosages) o;
-        return dosagesId == that.dosagesId && Objects.equals(userId, that.userId) && Objects.equals(medicineId, that.medicineId) && Objects.equals(timesInADay, that.timesInADay) && Objects.equals(timesPerWeek, that.timesPerWeek) && Objects.equals(dosageQuantity, that.dosageQuantity);
+        return dosagesId == that.dosagesId &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(medicinename, that.medicinename) &&
+                Objects.equals(timesInADay, that.timesInADay) &&
+                Objects.equals(timesPerWeek, that.timesPerWeek) &&
+                Objects.equals(dosageQuantity, that.dosageQuantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, dosagesId, medicineId, timesInADay, timesPerWeek, dosageQuantity);
+        return Objects.hash(userId, dosagesId, medicinename, timesInADay, timesPerWeek, dosageQuantity);
     }
 }

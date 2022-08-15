@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -22,31 +23,32 @@ public class FeedbackController {
     @Autowired
     FeedbackServiceImpl feedBackServiceImp;
 
-    @GetMapping("/feedback/{id}")
+    @GetMapping("/create-feedback/{id}")
     public String showFeedback(@PathVariable Long id,
-                               Model model){
+                               Model model,
+                               @Valid Feedback feedback){
         Optional<Users> users = usersService.findById(id);
-        Optional<Feedback> feedback = feedBackServiceImp.findByUserId(id);
-        if (feedback.isPresent()) {
-            model.addAttribute("users", users.get());
-            model.addAttribute("feedback", feedback.get());
-            return "/web/user/personal";
-        } else {
-            return "not-found";
-        }
+        model.addAttribute("user", users.get());
+        model.addAttribute("feedbacks", feedback);
+        return "/web/user/feedback-contact";
     }
 
-    @GetMapping("/create-feedback")
-    public String showNewFeedbackForm(Model model){
-        Feedback feedback = new Feedback();
-        model.addAttribute("feedback", feedback);
-        return "/web/user/feedback-create";
-    }
-
-    @PostMapping("/save-feedback")
-    public String saveFeedback(@ModelAttribute("feedback") Feedback feedback) {
+    @PostMapping("/create-feedback/{id}")
+    public String saveFeedback(@PathVariable(value = "id") Long id,
+                               @ModelAttribute("feedbacks") Feedback feedback) {
+        feedback.setUserId(id);
         feedBackServiceImp.saveFeedback(feedback);
-        return "redirect:/personal";
+        return "redirect:/";
     }
+
+//    @PostMapping("/create-feedback/{id}")
+//    public String saveFeedback(@PathVariable(value = "id") Long id,
+//                               String feedback) {
+//        Feedback feedback1 = new Feedback();
+//        feedback1.setUserId(id);
+//        feedback1.setFeedback(feedback);
+//        feedBackServiceImp.saveFeedback(feedback1);
+//        return "/web/user/feedback-contact";
+//    }
 
 }

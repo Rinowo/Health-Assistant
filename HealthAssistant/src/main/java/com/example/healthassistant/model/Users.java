@@ -18,6 +18,17 @@ public class Users {
     private String avatar;
     private String username;
 
+    public Users() {
+    }
+
+    public Users(String name, String number, String gender, Date birthday, String avatar) {
+        this.name = name;
+        this.number = number;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.avatar = avatar;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")

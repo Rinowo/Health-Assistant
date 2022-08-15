@@ -7,7 +7,7 @@ public class RegisterUser {
     private String name;
     private String email;
 
-    private String avatar = "/img/default-avatar.jpg";
+    private String avatar = "/avatar/default-avatar.jpg";
 
     private int status = 1;
 

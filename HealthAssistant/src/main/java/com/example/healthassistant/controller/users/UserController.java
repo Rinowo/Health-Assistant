@@ -39,9 +39,6 @@ public class UserController {
 
     @RequestMapping(value = "/registersubmit", method = RequestMethod.POST)
     public String registersubmit(@ModelAttribute RegisterUser registerUser) {
-        if(userService.existsByUsername(registerUser.getUsername())) {
-            //Co ton tai roi
-        } else {
             //Chua ton tai username
             Users u = new Users();
             u.setUsername(registerUser.getUsername());
@@ -60,7 +57,6 @@ public class UserController {
             userService.saveUsers(u);
             PersonalHealthVitals personalHealthVitals = new PersonalHealthVitals(u.getId());
             personalHealthService.savePersonalHealth(personalHealthVitals);
-        }
         return "redirect:/login";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)

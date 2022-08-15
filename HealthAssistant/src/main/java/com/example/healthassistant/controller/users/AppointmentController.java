@@ -1,10 +1,14 @@
 package com.example.healthassistant.controller.users;
 
+import com.example.healthassistant.common.Mail;
 import com.example.healthassistant.model.AppointmentStatus;
 import com.example.healthassistant.model.Users;
 import com.example.healthassistant.service.AppointmentStatusService;
 import com.example.healthassistant.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.mail.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Controller
 public class AppointmentController {
@@ -25,39 +31,30 @@ public class AppointmentController {
     @Autowired
     private UsersServiceImpl usersService;
 
-    @GetMapping("/appointment/{id}")
-    public String showAppointment(@PathVariable Long id,
-                                  Model model){
+    @GetMapping("/create-appoinment/{id}")
+    public String showNewAppointmentForm(Model model,
+                                         @PathVariable("id") Long id,
+                                         @Valid AppointmentStatus appointmentStatus){
         Optional<Users> users = usersService.findById(id);
-        Optional<AppointmentStatus> appointment = appointmentStatusService.findByUserId(id);
-        if (appointment.isPresent()) {
-            model.addAttribute("users", users.get());
-            model.addAttribute("appointment", appointment.get());
-            return "/web/user/personal";
-        } else {
-            return "not-found";
-        }
-    }
-
-    @GetMapping("/create-appoinment")
-    public String showNewAppointmentForm(Model model){
-        AppointmentStatus appointment = new AppointmentStatus();
-        model.addAttribute("appointment", appointment);
+        model.addAttribute("user",users.get());
+        model.addAttribute("appoinment", appointmentStatus);
         return "/web/user/appoinment-create";
     }
 
-    @PostMapping("/save-appointment")
-    public String saveAppointment(@ModelAttribute("appointment") AppointmentStatus appointment) {
+    @PostMapping("/create-appointment/{id}")
+    public String saveAppointment(@PathVariable Long id,
+                                  Model model,
+                                  @ModelAttribute("appointment") AppointmentStatus appointment) throws Exception {
+        Optional<Users> user = usersService.findById(id);
+        appointment.setUserId(id);
         appointmentStatusService.saveAppointment(appointment);
-        return "redirect:/personal";
-    }
-
-    @GetMapping("/edit-appoinment/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") long id,
-                                    Model model) {
-        Optional<AppointmentStatus> appointment = appointmentStatusService.findByUserId(id);
-        model.addAttribute("appointment", appointment.get());
-        return "/web/user/appointment-edit";
+        Mail.sendMail(user.get().getEmail() ,
+                user.get().getName(),
+                appointment.getDate(),
+                appointment.getTime(),
+                appointment.getLocation(),
+                appointment.getDescription());
+        return "redirect:/appoinment/" + id;
     }
 
     @PostMapping(value = "/edit-appoinment/{id}")
@@ -71,7 +68,22 @@ public class AppointmentController {
 
     @GetMapping("/delete-appointment/{id}")
     public String deleteAppointment(@PathVariable (value = "id") long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Users u = usersService.findByUsername(username);
         this.appointmentStatusService.deleteAppointment(id);
-        return "redirect:/personal-health";
+        return "redirect:/appoinment/" + u.getId();
+    }
+
+    @GetMapping("/appoinment/{id}")
+    public String showAppoinment(@PathVariable Long id,
+                                     Model model){
+
+        Optional<Users> users = usersService.findById(id);
+        List<AppointmentStatus> appointmentStatus = appointmentStatusService.findAllByUserId(id);
+        model.addAttribute("user", users.get());
+        model.addAttribute("appoinment", appointmentStatus);
+        return "web/user/appoinment";
     }
 }

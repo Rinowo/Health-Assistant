@@ -1,10 +1,13 @@
 package com.example.healthassistant.controller.users;
 
+
 import com.example.healthassistant.model.MedicineDosages;
 import com.example.healthassistant.model.Users;
-import com.example.healthassistant.service.MedicineDosagesService;
+import com.example.healthassistant.service.MedicineDosagesServiceImpl;
 import com.example.healthassistant.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,36 +23,39 @@ import java.util.Optional;
 @Controller
 public class MedicineDosagesController {
     @Autowired
-    MedicineDosagesService medicineDosagesService;
+    MedicineDosagesServiceImpl medicineDosagesService;
 
     @Autowired
     UsersServiceImpl usersService;
 
-    @GetMapping("/medicineDosage/{id}")
-    public String showMedicineDosage(@PathVariable Long id,
-                                     Model model){
+    @GetMapping("/medicine-dosages/{id}")
+    public String showMedicine(@PathVariable Long id,
+                                 Model model){
         Optional<Users> users = usersService.findById(id);
-        Optional<MedicineDosages> medicineDosages = medicineDosagesService.findByUserId(id);
-        if (medicineDosages.isPresent()) {
-            model.addAttribute("users", users.get());
-            model.addAttribute("medicineDosages", medicineDosages.get());
-            return "/web/user/personal";
-        } else {
-            return "not-found";
-        }
+        List<MedicineDosages> medicineDosages = medicineDosagesService.findAllByUserId(id);
+        model.addAttribute("user", users.get());
+        model.addAttribute("dosages", medicineDosages);
+        return "web/user/dosages";
     }
 
-    @GetMapping("/create-dosages")
-    public String showNewMedicineDosagesForm(Model model){
-        MedicineDosages medicineDosages = new MedicineDosages();
-        model.addAttribute("appointment", medicineDosages);
-        return "/web/user/medicine-dosages-create";
+    @GetMapping("/create-dosages/{id}")
+    public String saveDosagesForm(Model model,
+                                             @PathVariable("id") Long id,
+                                             @Valid MedicineDosages medicineDosages){
+        Optional<Users> users = usersService.findById(id);
+        model.addAttribute("user", users.get());
+        model.addAttribute("dosages", medicineDosages);
+        return "/web/user/create-dosages";
     }
 
-    @PostMapping("/save-dosages")
-    public String saveMedicineDosages(@ModelAttribute("feedback") MedicineDosages medicineDosages) {
+    @PostMapping("/create-dosages/{id}")
+    public String saveMedicineDosages(@PathVariable(value = "id") Long id,
+                                      @ModelAttribute("dosages") MedicineDosages medicineDosages) {
+        Optional<Users> users = usersService.findById(id);
+        medicineDosages.setUserId(id);
+
         medicineDosagesService.saveMedicine(medicineDosages);
-        return "redirect:/personal";
+        return "redirect:/medicine-dosages/" + id;
     }
 
     @GetMapping("/edit-dosages/{id}")
@@ -60,19 +66,16 @@ public class MedicineDosagesController {
         return "/web/user/medicine-dosages-edit";
     }
 
-    @PostMapping(value = "/edit-dosages/{id}")
-    public String updateMedicineDosages(@PathVariable("id") Long id,
-                                        @Valid MedicineDosages appointment,
-                                        BindingResult result) {
-        appointment.setUserId(id);
-        medicineDosagesService.saveMedicine(appointment);
-        return "redirect:/personal-health/" + id;
-    }
 
     @GetMapping("/delete-dosages/{id}")
-    public String deleteMedicineDosages(@PathVariable (value = "id") long id) {
-        this.medicineDosagesService.deleteMedicine(id);
-        return "redirect:/personal-health" + id;
+    public String deleteMedicineDosages(@PathVariable (value = "id") long id,
+                                        Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Users u = usersService.findByUsername(username);
+        medicineDosagesService.deleteById(id);
+        return "redirect:/medicine-dosages/"+ u.getId();
     }
 
 }
