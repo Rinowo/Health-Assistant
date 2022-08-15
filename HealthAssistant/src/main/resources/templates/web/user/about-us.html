@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head">
+    <meta charset="UTF-8">
+    <title>About us</title>
+</head>
+<body>
+<div th:replace="layout/frag :: header"></div>
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a th:href="@{/home}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="#">Appoinment</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal" th:text="${user.name}"></h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+
+<div th:replace="layout/frag :: footer"></div>
+<div th:replace="layout/frag :: script"></div>
+</body>
+</html>

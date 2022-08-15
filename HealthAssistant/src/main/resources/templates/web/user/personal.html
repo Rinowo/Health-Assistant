@@ -11,7 +11,7 @@
         <div class="container text-center wow fadeInUp">
             <nav aria-label="Breadcrumb">
                 <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/home}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="#">Personal</li>
                 </ol>
             </nav>
@@ -20,21 +20,97 @@
     </div> <!-- .banner-section -->
 </div> <!-- .page-banner -->
 
+
 <div style="margin-top: 50px">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+<!--                Bang 1-->
                 <div>
-                    <img style=":width 100px height 100px;"
-                         th:src="@{${user.avatar}}" alt=""
-                         class="img-fluid wc-image">
+                    <ul class="">
+                        <li class="list-group-item">
+                            <div style="width: 100px; height: 100px" class="clearfix">
+                                <div style="float: right ;">
+                                    <img style="width: 100px; height: 100px;"
+                                         th:src="@{${user.avatar}}" alt=""
+                                         class="img-fluid wc-image">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Name</span>
+
+                                <strong th:text="${user.name}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Email</span>
+
+                                <strong th:text="${user.email}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Number</span>
+
+                                <strong th:text="${user.number}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Gender</span>
+
+                                <strong th:text="${user.gender}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Date of birth</span>
+
+                                <strong th:text="${user.birthday}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left"></span>
+
+                                <a class="btn btn-info" th:href="@{/info-edit/{id}(id = ${user.getId()})}">
+                                    <i style="padding: 0 10px"
+                                       class="fa-solid fa-user-pen"></i> Info Edit</a>
+
+                                <a style="float: right; margin-left: 30px" th:href="@{/logout}"
+                                   class="btn btn-danger" ><i style="padding: 0 10px;" class="fa-solid fa-user-xmark"></i> Delete Account</a>
+
+                            </div>
+                        </li>
+                    </ul>
+
+
                 </div>
             </div>
 
             <div class="col-md-6">
                 <form action="#" method="post" class="form">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                    <ul class="">
+                        <li class="list-group-item" style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Weight</span>
 
@@ -44,7 +120,7 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
+                        <li class="list-group-item"  style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Height</span>
 
@@ -54,7 +130,7 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
+                        <li class="list-group-item"  style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Blood Pressure</span>
 
@@ -64,7 +140,7 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
+                        <li class="list-group-item"  style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Blood Glucose</span>
 
@@ -74,7 +150,7 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
+                        <li class="list-group-item"  style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Blood Oxygen</span>
 
@@ -84,7 +160,7 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
+                        <li class="list-group-item"  style="height: 58px">
                             <div class="clearfix">
                                 <span class="pull-left">Blood Temperature</span>
 
@@ -94,12 +170,10 @@
                             </div>
                         </li>
 
-                        <li class="list-group-item">
-                            <div class="clearfix">
-                                <a th:href="@{/delete/{id}(id = ${personHealth.userId})}"
-                                   class="btn btn-danger" style="float: right">Delete Account</a>
-                                <a th:href="@{/edit/{id}(id = ${personHealth.userId})}"
-                                   class="btn btn-info" style="float: right">Edit</a>
+                        <li class="list-group-item d-flex" >
+                            <div style="margin: 10px;" class="clearfix">
+                                <a style="padding: 10px; float: right; margin-right: 5px " th:href="@{/edit/{id}(id = ${personHealth.userId})}"
+                                   class="btn btn-info" ><i style="padding: 0 10px;" class="fa-solid fa-pen"></i> Edit</a>
                             </div>
                         </li>
                     </ul>

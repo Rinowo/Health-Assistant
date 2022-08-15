@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head">
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<!--th:action=""-->
+<!--th:object=""-->
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"></h3>
+                        <form action="#"
+                              th:action="@{/info-edit/{id}(id = ${user.id})}"
+                              th:object="${user}"
+                              enctype="multipart/form-data"
+                              method="POST">
+                            <input type="hidden" th:field="*{id}" />
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input placeholder="Full name" th:field="*{name}" type="text" id="name" class="form-control form-control-lg" />
+                                        <label class="form-label" for="name"></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input placeholder="Email" th:field="*{email}" type="email" id="email" class="form-control form-control-lg" />
+                                        <label class="form-label" for="email"></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input placeholder="Phone number..." th:field="*{number}" type="text" id="number" class="form-control form-control-lg" />
+                                        <label class="form-label" for="number"></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <div class="form-check form-check-inline">
+                                            <input th:field="*{gender}" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Male">
+                                            <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input th:field="*{gender}" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Female">
+                                            <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input th:field="*{gender}" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Other">
+                                            <label class="form-check-label" for="inlineCheckbox3">Other</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        <label>
+                                            Date of birth:
+                                            <br>
+                                            <input th:field="*{birthday}" type="date" name="birthday">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Avatar</label>
+                                        <input type="file" name="avatar"
+                                               class="form-control-file"
+                                               id="exampleFormControlFile1">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+                            </div>
+                            <div class="form-outline">
+                                <label for="username"></label>
+                                <input hidden placeholder="username" th:field="*{username}" type="text" id="username"
+                                       class="form-control form-control-lg" />
+                                <label for="password"></label>
+                                <input hidden placeholder="password" th:field="*{password}" type="text" id="password"
+                                       class="form-control form-control-lg" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="layout/frag :: script"></div>
+</body>
+</html>

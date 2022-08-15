@@ -17,4 +17,8 @@ public interface MedicineDosagesService {
     MedicineDosages getOne(long dosagesId);
 
     Optional<MedicineDosages> findByUserId(Long id);
+
+    List<MedicineDosages> findAllByUserId(Long id);
+
+    void deleteById(Long id);
 }

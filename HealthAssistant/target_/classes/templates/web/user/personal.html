@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head"><title>One Health - Medical Assistant</title></head>
+<body>
+
+<div th:replace="layout/frag :: header"></div>
+
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="#">Personal</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal" th:text="${user.name}"></h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+
+<div style="margin-top: 50px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+<!--                Bang 1-->
+                <div>
+                    <ul class="">
+                        <li class="list-group-item">
+                            <div style="width: 100px; height: 100px" class="clearfix">
+                                <div style="float: right ;">
+                                    <img style="width: 100px; height: 100px;"
+                                         th:src="@{${user.avatar}}" alt=""
+                                         class="img-fluid wc-image">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Name</span>
+
+                                <strong th:text="${user.name}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Email</span>
+
+                                <strong th:text="${user.email}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Number</span>
+
+                                <strong th:text="${user.number}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Gender</span>
+
+                                <strong th:text="${user.gender}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left">Date of birth</span>
+
+                                <strong th:text="${user.birthday}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="clearfix">
+                                <span class="pull-left"></span>
+
+                                <a class="btn btn-info" th:href="@{/info-edit/{id}(id = ${user.getId()})}">
+                                    <i style="padding: 0 10px"
+                                       class="fa-solid fa-user-pen"></i> Info Edit</a>
+
+                                <a style="float: right; margin-left: 30px" th:href="@{/logout}"
+                                   class="btn btn-danger" ><i style="padding: 0 10px;" class="fa-solid fa-user-xmark"></i> Delete Account</a>
+
+                            </div>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <form action="#" method="post" class="form">
+                    <ul class="">
+                        <li class="list-group-item" style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Weight</span>
+
+                                <strong th:text="${personHealth.weight}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item"  style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Height</span>
+
+                                <strong th:text="${personHealth.height}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item"  style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Blood Pressure</span>
+
+                                <strong th:text="${personHealth.bloodPressure}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item"  style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Blood Glucose</span>
+
+                                <strong th:text="${personHealth.bloodGlucose}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item"  style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Blood Oxygen</span>
+
+                                <strong th:text="${personHealth.bloodOxygen}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item"  style="height: 58px">
+                            <div class="clearfix">
+                                <span class="pull-left">Blood Temperature</span>
+
+                                <strong th:text="${personHealth.bodyTemperature}"
+                                        class="pull-right" style="float:right;" ></strong>
+                                <strong class="pull-right" style="float:right;"></strong>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item d-flex" >
+                            <div style="margin: 10px;" class="clearfix">
+                                <a style="padding: 10px; float: right; margin-right: 5px " th:href="@{/edit/{id}(id = ${personHealth.userId})}"
+                                   class="btn btn-info" ><i style="padding: 0 10px;" class="fa-solid fa-pen"></i> Edit</a>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-section">
+</div>
+<div th:replace="layout/frag :: footer"></div>
+<div th:replace="layout/frag :: script"></div>
+</body>
+</html>

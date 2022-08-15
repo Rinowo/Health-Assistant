@@ -43,4 +43,14 @@ public class MedicineDosagesServiceImpl implements MedicineDosagesService{
     public Optional<MedicineDosages> findByUserId(Long id) {
         return medicineDosagesRepository.findByUserId(id);
     }
+
+    @Override
+    public List<MedicineDosages> findAllByUserId(Long id) {
+        return medicineDosagesRepository.findAllByUserId(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        medicineDosagesRepository.deleteById(id);
+    }
 }

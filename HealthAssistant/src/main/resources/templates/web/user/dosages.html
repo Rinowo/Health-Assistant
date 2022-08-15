@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head">
+    <meta charset="UTF-8">
+    <title>Medicine Dosages</title>
+</head>
+<body>
+<div th:replace="layout/frag :: header"></div>
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Medicine Dosages</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal" th:text="${user.name}"></h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+<div class="container" style="margin-bottom: 100px;margin-top: 100px">
+    <p>
+        <a class="btn btn-primary" th:href="@{/create-dosages/{id}(id = ${user.id})}"
+           style="margin-bottom: 30px;font-size: 15px;color: black">Add Medicine Appoinment</a>
+    </p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th style="font-size: 15px">Medicine</th>
+            <th style="font-size: 15px">Times A Day</th>
+            <th style="font-size: 15px">Days A Week</th>
+            <th style="font-size: 15px">Dosages Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:switch="${dosages}">
+            <h2 th:case="null">No medicine yet!</h2>
+            <div th:case="*">
+                <tr th:each="item: ${dosages}">
+                    <td width="150" th:text="${item.medicinename}"></td>
+                    <td width="150" th:text="${item.timesInADay}"></td>
+                    <td width="150" th:text="${item.timesPerWeek}"></td>
+                    <td width="500" th:text="${item.dosageQuantity}"></td>
+                    <td width="215" ><a style="font-size: 15px"
+                                        class="btn btn-danger btn-sm"
+                                        th:href="@{/delete-dosages/{id}(id = ${item.getDosagesId()})}">Delete</a></td>
+                </tr>
+                <a href=""></a>
+            </div>
+        </div>
+
+
+        </tbody>
+    </table>
+</div>
+
+<div class="page-section">
+</div>
+<div th:replace="layout/frag :: footer"></div>
+<div th:replace="layout/frag :: script"></div>
+</body>
+</html>

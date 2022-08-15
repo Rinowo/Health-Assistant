@@ -40,7 +40,7 @@ public class AppointmentStatusServiceImpl implements AppointmentStatusService{
     }
 
     @Override
-    public Optional<AppointmentStatus> findByUserId(Long id) {
-        return appointmentRepository.findByUserId(id);
+    public List<AppointmentStatus> findAllByUserId(Long id) {
+        return appointmentRepository.findAllByUserId(id);
     }
 }

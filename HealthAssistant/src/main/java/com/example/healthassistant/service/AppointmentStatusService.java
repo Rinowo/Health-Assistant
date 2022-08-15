@@ -16,5 +16,5 @@ public interface AppointmentStatusService {
 
     AppointmentStatus getOne(long notificationId);
 
-    Optional<AppointmentStatus> findByUserId(Long id);
+    List<AppointmentStatus> findAllByUserId(Long id);
 }

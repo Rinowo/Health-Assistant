@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head">
+    <meta charset="UTF-8">
+    <title>Medicine Dosages</title>
+</head>
+<body>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"></h3>
+                        <form action="#" th:action="@{/create-dosages/{id}(id = ${user.id})}"
+                              th:object="${dosages}" method="POST">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input placeholder="Medicine " th:field="*{medicinename}" type="text" id="medicinename" class="form-control form-control-lg" />
+                                        <label class="form-label" for="medicinename"></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input placeholder="Times a day" th:field="*{timesInADay}" type="text" id="timesInADay" class="form-control form-control-lg" />
+                                        <label class="form-label" for="timesInADay"></label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        <input placeholder="Days a week" th:field="*{timesPerWeek}" type="text" id="timesPerWeek" class="form-control form-control-lg" />
+                                        <label class="form-label" for="timesPerWeek"></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        <input placeholder="Dosages Quantity" th:field="*{dosageQuantity}" type="text" id="dosageQuantity" class="form-control form-control-lg" />
+                                        <label class="form-label" for="dosageQuantity"></label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="layout/frag :: script"></div>
+</body>
+</html>

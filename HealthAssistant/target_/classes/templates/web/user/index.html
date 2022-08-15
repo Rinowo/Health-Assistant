@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/frag :: head"><title>One Health - Medical Assistant</title></head>
+<style>
+    html,
+    body {
+        position: relative;
+        height: 100%;
+    }
+
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    .swiper {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 300px;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+    }
+    .card{
+        border-radius: 25px;
+        background-color: #00D9A5;
+    }
+    .image-content,
+    .card-content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 14px;
+    }
+    .image-content{
+        position: relative;
+        row-gap: 5px;
+        padding: 25px 0;
+    }
+
+    .overlay{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        /*background-image: url("../static/img/member/background.webp");*/
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 25px 25px 0 25px;
+    }
+
+    .overlay::after{
+        border-radius: 0 25px 0 0;
+        background-color: #FFF;
+    }
+    .card-image{
+        position: relative;
+        height: 150px;
+        width: 150px;
+    }
+    .card-image .card-img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #FFF;
+    }
+    .name{
+        margin-top: 25px;
+        font-size: 25px;
+        font-weight: 500;
+        color: #fff;
+    }
+    .swiper-button-next{
+        right: 0;
+    }
+    .swiper-button-prev{
+        left: 0;
+    }
+
+</style>
+<body>
+    <div th:switch="${user}">
+        <div th:case="null">
+            <!-- Back to top button -->
+            <div class="back-to-top"></div>
+
+            <header>
+                <div class="topbar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8 text-sm">
+                                <div class="site-info">
+                                    <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
+                                    <span class="divider">|</span>
+                                    <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right text-sm">
+                                <div class="social-mini-button">
+                                    <a href="#"><span class="mai-logo-facebook-f"></span></a>
+                                    <a href="#"><span class="mai-logo-twitter"></span></a>
+                                    <a href="#"><span class="mai-logo-dribbble"></span></a>
+                                    <a href="#"><span class="mai-logo-instagram"></span></a>
+                                </div>
+                            </div>
+                        </div> <!-- .row -->
+                    </div> <!-- .container -->
+                </div> <!-- .topbar -->
+
+                <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+                    <div class="container">
+                        <a class="navbar-brand" href="/home"><span class="text-primary">One</span>-Health</a>
+
+                        <form th:action="@{/IssuePersonal/submitForm}" method="post">
+                            <div class="input-group input-navbar">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="icon-addon1"><span class="mai-search"></span></span>
+                                </div>
+                                <input type="text" th:value="${keyword}" name="keyword" class="form-control" placeholder="Search..">
+                            </div>
+                        </form>
+
+                        <button class="navbar-toggler" type="button"
+                                data-toggle="collapse" data-target="#navbarSupport"
+                                aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupport">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/health-assistant">Health Assistant</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/feedback-contact">Feedback & Contact</a>
+                                </li>
+                                <li class="nav-item">
+
+                                    <div>
+
+
+                                        <a class="btn btn-primary ml-lg-3" th:href="@{/login}">Login</a>
+                                        <a class="btn btn-primary ml-lg-3" th:href="@{/register}">Register</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div> <!-- .navbar-collapse -->
+                    </div> <!-- .container -->
+                </nav>
+            </header>
+
+            <div th:replace="layout/frag :: banner"></div>
+            <div class="bg-light">
+                <div class="page-section py-3 mt-md-n5 custom-index">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-secondary text-white">
+                                        <span class="mai-chatbubbles-outline"></span>
+                                    </div>
+                                    <p><a href=""><span>Chat</span> with a doctors</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-primary text-white">
+                                        <span class="mai-shield-checkmark"></span>
+                                    </div>
+                                    <p><span>One</span>-Health Protection</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-accent text-white">
+                                        <span class="mai-basket"></span>
+                                    </div>
+                                    <p><span>One</span>-Health Pharmacy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .page-section -->
+
+                <div class="page-section pb-0">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 py-3 wow fadeInUp">
+                                <h1>Welcome to Your Health <br> Center</h1>
+                                <a th:href="@{about}" class="btn btn-primary">Learn More</a>
+                            </div>
+                            <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
+                                <div class="img-place custom-img-1">
+                                    <img th:src="@{/assets/img/bg-doctor.png}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .bg-light -->
+            </div> <!-- .bg-light -->
+
+            <nav class="">
+                <div class="page-section">
+                    <div class="container">
+                        <h1 class="text-center mb-5 wow fadeInUp">Our Member</h1>
+
+                        <div class="swiper mySwiper" style="height: 400px;width: 100%;margin-top: 50px">
+                            <div class="card-wrapper swiper-wrapper">
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/quan.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Cao Minh Quân</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/thanh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Đỗ Minh Thành</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/tunganh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Tùng Anh</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/duc.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Việt Đức</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/canh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Đức Cảnh</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/phuc.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Chu Duy Phúc</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+
+                    </div>
+                    <comparison>
+                        <div style="width: 1500px;" class="sliding">
+                            <img src="../assets/img/group/GroupPic.png">
+                            <img id="my-img" src="../assets/img/group/TayKoTo.jpeg">
+                            <input type="range" min="0" max="100"
+                                   value="50" id="slider" oninput="slide()">
+                        </div>
+                    </comparison>
+                </div>
+            </nav>
+
+            <div th:replace="layout/frag :: footer"></div>
+        </div>
+        <div th:case="*">
+            <!-- Back to top button -->
+            <div class="back-to-top"></div>
+
+            <div th:replace="layout/frag :: header"></div>
+
+            <div th:replace="layout/frag :: banner"></div>
+            <div class="bg-light">
+                <div class="page-section py-3 mt-md-n5 custom-index">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-secondary text-white">
+                                        <span class="mai-chatbubbles-outline"></span>
+                                    </div>
+                                    <p><span>Chat</span> with a doctors</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-primary text-white">
+                                        <span class="mai-shield-checkmark"></span>
+                                    </div>
+                                    <p><span>One</span>-Health Protection</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 py-3 py-md-0">
+                                <div class="card-service wow fadeInUp">
+                                    <div class="circle-shape bg-accent text-white">
+                                        <span class="mai-basket"></span>
+                                    </div>
+                                    <p><span>One</span>-Health Pharmacy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .page-section -->
+
+
+            <nav class="">
+                <div class="page-section">
+                    <div class="container">
+                        <h1 class="text-center mb-5 wow fadeInUp">Our Member</h1>
+
+                        <div class="swiper mySwiper" style="height: 400px;width: 100%;margin-top: 50px">
+                            <div class="card-wrapper swiper-wrapper">
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/quan.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Cao Minh Quân</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/thanh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Đỗ Minh Thành</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/tunganh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Tùng Anh</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/duc.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Việt Đức</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/canh.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Nguyễn Đức Cảnh</h2>
+                                    </div>
+                                </div>
+                                <div class="card swiper-slide">
+                                    <div class="image-content">
+                                        <span class="overlay"></span>
+
+                                        <div class="card-image">
+                                            <img src="../assets/img/member/phuc.png" alt="" class="card-img">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h2 class="name">Chu Duy Phúc</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+
+                    </div>
+                    <comparison>
+                        <div style="width: 1500px;" class="sliding">
+                            <img src="../assets/img/group/GroupPic.png">
+                            <img id="my-img" src="../assets/img/group/TayKoTo.jpeg">
+                            <input type="range" min="0" max="100"
+                                   value="50" id="slider" oninput="slide()">
+                        </div>
+                    </comparison>
+                </div>
+            </nav>
+                <div th:replace="layout/frag :: footer"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div th:replace="layout/frag :: script"></div>
+    <script type="text/javascript">
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            loop: true,
+            slidesPerView: "auto",
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+            },
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+</body>
+</html>
